@@ -10,8 +10,53 @@ using System.IO;
 namespace GoogleCalculatorTests.Tests
 {
     [TestFixture]
-    public class BehaivourTests: TestBase
+    public class CalculatorTests
     {
+        public IWebDriver _driver;
+        protected IConfiguration _configuration;
+
+        /// <summary>
+        /// Loads settings file
+        /// </summary>
+        public void InitConfiguration()
+        {
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+            _configuration = config;
+        }
+
+        /// <summary>
+        /// Set the correct driver depending of the "Browser" app setting.
+        /// </summary>
+        private void SetDriver()
+        {
+            switch (_configuration["Browser"])
+            {
+                case "Firefox":
+                    _driver = new FirefoxDriver(); ;
+                    break;
+                case "Chrome":
+                    _driver = new ChromeDriver("C:\\drivers");
+                    break;
+                default:
+                    throw new Exception("Invalid browser");
+            }
+        }
+
+        /// <summary>
+        /// Initializes browser driver and required settings before each test execution.
+        /// </summary>
+        [SetUp]
+        public void SetUp()
+        {
+            InitConfiguration();
+            SetDriver();
+            _driver.Navigate().GoToUrl(_configuration["URL"]);
+            _driver.Manage().Window.Maximize();
+        }
+
         /// <summary>
         /// Test Case ID: TC_CALCULATOR_001
         /// Test Scenario: Verify that calculator is displayed after search for "calculator" in search engine page.
@@ -70,6 +115,38 @@ namespace GoogleCalculatorTests.Tests
 
 
             Assert.AreEqual("1", calculatorPage.CalculatorScreenResult.Text);
+        }
+
+        /// <summary>
+        /// Test Case ID: From TC_CALCULATOR_004 to TC_CALCULATOR_008
+        /// Test Scenario: Verify that calculator is displayed after search for "calculator" in search engine page.
+        /// </summary>
+        [Test]
+        [TestCase("2+3")]
+        [TestCase("1+2+2")]
+        [TestCase("5+9+7+8+9+3+4+1+6")]
+        [TestCase("62+75+84")]
+        [TestCase("2-3")]
+        [TestCase("5-9-7-8-9-3-4-1-6")]
+        [TestCase("234-569-261-458")]
+        [TestCase("99537+3586-74")]
+        [TestCase("819-652+4.9+8.3")]
+        [TestCase("8x40x38")]
+        [TestCase("7.86x5.41")]
+        [TestCase("796÷125")]
+        [TestCase("5÷0")]
+        [TestCase("52x33+9.1÷6")]
+        [TestCase("34-75÷6.294")]
+        [TestCase("7-2.5+46x8÷2")]
+        public void TC_CALCULATOR_ANY_ARITHMETIC_OPERATION(string operation)
+        {
+            SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
+            CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
+
+            decimal localCalculation = calculatorPage.Calculate(operation);
+            decimal googleCalculation = calculatorPage.GoogleCalculation(operation);
+
+            Assert.AreEqual(localCalculation, googleCalculation);
         }
 
         /// <summary>
@@ -182,5 +259,13 @@ namespace GoogleCalculatorTests.Tests
             Assert.AreEqual("Ans=9", calculatorPage.CalculatorScreenSummary.Text);
         }
 
+        /// <summary>
+        /// Close driver instance after test execution.
+        /// </summary>
+        [TearDown]
+        public void TearDown()
+        {
+            _driver.Close();
+        }
     }
 }
