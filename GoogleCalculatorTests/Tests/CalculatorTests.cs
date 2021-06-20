@@ -189,6 +189,29 @@ namespace GoogleCalculatorTests.Tests
         }
 
         /// <summary>
+        /// Test Case ID: TC_CALCULATOR_005
+        /// Test Scenario: Verify that the result of the addition of three 2-digit numbers  is correct.
+        /// </summary>
+        [Test]
+        public void TC_CALCULATOR_007()
+        {
+            SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
+            CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
+
+            calculatorPage.SixButton.Click();
+            calculatorPage.TwoButton.Click();
+            calculatorPage.AddtionButton.Click();
+            calculatorPage.SevenButton.Click();
+            calculatorPage.FiveButton.Click();
+            calculatorPage.AddtionButton.Click();
+            calculatorPage.EightButton.Click();
+            calculatorPage.FourButton.Click();
+            calculatorPage.EqualslButton.Click();
+
+            Assert.AreEqual("221", calculatorPage.CalculatorScreenResult.Text);
+        }
+
+        /// <summary>
         /// Close driver instance after test execution.
         /// </summary>
         [TearDown]
