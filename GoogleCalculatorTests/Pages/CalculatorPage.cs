@@ -87,7 +87,7 @@ namespace GoogleCalculatorTests.Pages
             get { return _driver.FindElement(By.XPath("//div[.='3']")); }
         }
 
-        public IWebElement SubstractionButton
+        public IWebElement SubtractionButton
         {
             get { return _driver.FindElement(By.CssSelector("[jsname='pPHzQc']")); }
         }
