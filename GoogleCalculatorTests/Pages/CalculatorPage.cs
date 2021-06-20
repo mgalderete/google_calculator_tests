@@ -34,6 +34,11 @@ namespace GoogleCalculatorTests.Pages
             get { return _driver.FindElement(By.XPath("//div[.='AC']")); }
         }
 
+        public IWebElement CEButton
+        {
+            get { return _driver.FindElement(By.XPath("//div[.='CE']")); }
+        }
+
         public IWebElement SevenButton
         {
             get { return _driver.FindElement(By.XPath("//div[.='7']")); }
@@ -153,6 +158,16 @@ namespace GoogleCalculatorTests.Pages
                             break;
 
                     }
+                }
+
+                if (!operation.Contains('+') && !operation.Contains('-') && !operation.Contains('x') && !operation.Contains('÷')) //If the recieved string is not an operation it will clean all from screen.
+                {
+                    foreach(char digit in operation)
+                    {
+                        CEButton.Click();
+                    }
+
+                    return CalculatorScreenResult.Text;
                 }
 
                 EqualslButton.Click();

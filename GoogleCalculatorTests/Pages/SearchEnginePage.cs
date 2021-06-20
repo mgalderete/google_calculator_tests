@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 
-
 namespace GoogleCalculatorTests.Pages
 {
     public class SearchEnginePage

@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium.Firefox;
 using GoogleCalculatorTests.Pages;
 using System.IO;
-using System.Collections.Generic;
 
 namespace GoogleCalculatorTests.Tests
 {
@@ -44,6 +43,10 @@ namespace GoogleCalculatorTests.Tests
                 default:
                     throw new Exception("Invalid browser");
             }
+
+            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+            _driver.Navigate().GoToUrl(_configuration["URL"]);
+            _driver.Manage().Window.Maximize();
         }
 
         /// <summary>
@@ -54,8 +57,6 @@ namespace GoogleCalculatorTests.Tests
         {
             InitConfiguration();
             SetDriver();
-            _driver.Navigate().GoToUrl(_configuration["URL"]);
-            _driver.Manage().Window.Maximize();
         }
 
         /// <summary>
@@ -162,7 +163,6 @@ namespace GoogleCalculatorTests.Tests
 
             string operation = $"{number}÷0";
 
-            decimal localCalculation = calculatorPage.Calculate(operation);
             string googleCalculation = calculatorPage.GoogleCalculation(operation);
 
             Assert.AreEqual("Infinity", calculatorPage.CalculatorScreenResult.Text);
@@ -235,6 +235,21 @@ namespace GoogleCalculatorTests.Tests
 
             Assert.AreEqual($"Ans={result}", calculatorPage.CalculatorScreenSummary.Text.Replace(" ", ""));
         }
+
+        /// <summary>
+        /// Test Case ID: TC_CALCULATOR_024
+        /// Test Scenario: Verify that after perform an operation and click "AC" button the summary of the calculation is displayed in correct format.
+        /// </summary>
+        [Test]
+        [TestCase("555555555")]
+        public void TC_CALCULATOR_023(string number)
+        {
+            SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
+            CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
+
+            Assert.AreEqual("0", calculatorPage.GoogleCalculation(number));
+        }
+
 
         /// <summary>
         /// Close driver instance after test execution.
