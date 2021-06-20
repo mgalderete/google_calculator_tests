@@ -1,13 +1,7 @@
-﻿using GoogleCalculatorTests.Utilities;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using OpenQA.Selenium;
-using System.Configuration;
 using OpenQA.Selenium.Chrome;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium.Firefox;
 using GoogleCalculatorTests.Pages;
@@ -87,6 +81,8 @@ namespace GoogleCalculatorTests.Tests
             SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
             CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
 
+            Assert.IsTrue(calculatorPage.CalculatorScreenSummary.Displayed);
+            Assert.IsTrue(calculatorPage.CalculatorScreenResult.Displayed);
             Assert.IsTrue(calculatorPage.ACButton.Displayed);
             Assert.IsTrue(calculatorPage.SevenButton.Displayed);
             Assert.IsTrue(calculatorPage.EightButton.Displayed);
@@ -105,6 +101,23 @@ namespace GoogleCalculatorTests.Tests
             Assert.IsTrue(calculatorPage.EqualslButton.Displayed);
             Assert.IsTrue(calculatorPage.AddtionButton.Displayed);
         }
+
+        /// <summary>
+        /// Test Case ID: TC_CALCULATOR_003
+        /// Test Scenario: Verify that clicked digit button is displayed in calculator virtual screen.
+        /// </summary>
+        [Test]
+        public void TC_CALCULATOR_003()
+        {
+            SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
+            CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
+
+            calculatorPage.OneButton.Click();
+
+
+            Assert.AreEqual("1", calculatorPage.CalculatorScreenResult.Text);
+        }
+
 
         /// <summary>
         /// Close driver instance after test execution.

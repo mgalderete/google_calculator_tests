@@ -1,9 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GoogleCalculatorTests.Pages
 {
@@ -22,9 +17,14 @@ namespace GoogleCalculatorTests.Pages
             get { return _driver.FindElement(By.ClassName("tyYmIf")); }
         }
 
-        public IWebElement CalculatorScreen
+        public IWebElement CalculatorScreenSummary
         {
-            get { return _driver.FindElement(By.ClassName("XH1CIc")); }
+            get { return _driver.FindElement(By.CssSelector("[jsname='ubtiRe']")); }
+        }
+
+        public IWebElement CalculatorScreenResult
+        {
+            get { return _driver.FindElement(By.CssSelector("[jsname='VssY5c']")); }
         }
 
         public IWebElement ACButton
