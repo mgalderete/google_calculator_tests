@@ -132,7 +132,7 @@ namespace GoogleCalculatorTests.Pages
         /// <summary>
         /// Description: This method performs any arithmetic operation contained in a string in Goolge's calculator.
         /// </summary>
-        public decimal GoogleCalculation(string operation)
+        public string GoogleCalculation(string operation)
         {
             try
             {
@@ -157,12 +157,11 @@ namespace GoogleCalculatorTests.Pages
 
                 EqualslButton.Click();
 
-                decimal result = Convert.ToDecimal(CalculatorScreenResult.Text);
-                return Math.Round(result, 1);
+                return CalculatorScreenResult.Text;
             }
-            catch(InvalidCastException ex)
+            catch(Exception ex)
             {
-                return 0;
+                return null;
             }            
         }
 

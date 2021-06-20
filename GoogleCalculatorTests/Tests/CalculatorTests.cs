@@ -135,7 +135,6 @@ namespace GoogleCalculatorTests.Tests
         [TestCase("8x40x38")]
         [TestCase("7.86x5.41")]
         [TestCase("796÷125")]
-        [TestCase("5÷0")]
         [TestCase("52x33+9.1÷6")]
         [TestCase("34-75÷6.294")]
         [TestCase("7-2.5+46x8÷2")]
@@ -145,10 +144,30 @@ namespace GoogleCalculatorTests.Tests
             CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
 
             decimal localCalculation = calculatorPage.Calculate(operation);
-            decimal googleCalculation = calculatorPage.GoogleCalculation(operation);
+            string googleCalculation = calculatorPage.GoogleCalculation(operation);
 
-            Assert.AreEqual(localCalculation, googleCalculation);
+            Assert.AreEqual(localCalculation, Math.Round(Convert.ToDecimal(googleCalculation), 1));
         }
+
+        /// <summary>
+        /// Test Case ID: TC_CALCULATOR_016
+        /// Test Scenario: Verify that division by 0  returns "Infinity "as result.
+        /// </summary>
+        [Test]
+        [TestCase("5")]
+        public void TC_CALCULATOR_016(string number)
+        {
+            SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
+            CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
+
+            string operation = $"{number}÷0";
+
+            decimal localCalculation = calculatorPage.Calculate(operation);
+            string googleCalculation = calculatorPage.GoogleCalculation(operation);
+
+            Assert.AreEqual("Infinity", calculatorPage.CalculatorScreenResult.Text);
+        }
+
 
         /// <summary>
         /// Test Case ID: TC_CALCULATOR_019
@@ -161,9 +180,9 @@ namespace GoogleCalculatorTests.Tests
             SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
             CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
 
-            calculatorPage.GoogleCalculation(operation);
+            calculatorPage.GoogleCalculation(operation).Replace(" ", "");
 
-            Assert.AreEqual($"{operation}=", calculatorPage.CalculatorScreenSummary.Text.Trim());
+            Assert.AreEqual($"{operation}=", calculatorPage.CalculatorScreenSummary);
         }
 
         /// <summary>
@@ -177,9 +196,7 @@ namespace GoogleCalculatorTests.Tests
             SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
             CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
 
-            calculatorPage.GoogleCalculation(operation);
-
-            Assert.IsTrue(calculatorPage.CalculatorScreenSummary.Text.Contains("e+"));
+            Assert.IsTrue(calculatorPage.GoogleCalculation(operation).Contains("e+"));
         }
 
         /// <summary>
@@ -197,9 +214,9 @@ namespace GoogleCalculatorTests.Tests
             calculatorPage.ACButton.Click();
 
             decimal result = calculatorPage.Calculate(operation2);
-            decimal googleResult = calculatorPage.GoogleCalculation(operation2);
+            string googleResult = calculatorPage.GoogleCalculation(operation2);
 
-            Assert.AreEqual(result, googleResult);
+            Assert.AreEqual(result, Math.Round(Convert.ToDecimal(googleResult), 1));
         }
 
         /// <summary>
@@ -213,10 +230,10 @@ namespace GoogleCalculatorTests.Tests
             SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
             CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
 
-            decimal result = calculatorPage.GoogleCalculation(operation);
+            string result = calculatorPage.GoogleCalculation(operation);
             calculatorPage.ACButton.Click();
 
-            Assert.AreEqual($"Ans={result}", calculatorPage.CalculatorScreenSummary.Text);
+            Assert.AreEqual($"Ans={result}", calculatorPage.CalculatorScreenSummary.Text.Replace(" ", ""));
         }
 
         /// <summary>
