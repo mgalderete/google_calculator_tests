@@ -182,7 +182,7 @@ namespace GoogleCalculatorTests.Tests
 
             calculatorPage.GoogleCalculation(operation).Replace(" ", "");
 
-            Assert.AreEqual($"{operation}=", calculatorPage.CalculatorScreenSummary);
+            Assert.AreEqual($"{operation}=", calculatorPage.CalculatorScreenSummary.Text.Replace(" ", ""));
         }
 
         /// <summary>
