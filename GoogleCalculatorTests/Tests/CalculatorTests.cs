@@ -10,18 +10,28 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium.Firefox;
+using GoogleCalculatorTests.Pages;
+using System.IO;
 
 namespace GoogleCalculatorTests.Tests
 {
     //Note: Usually tests should be in a separate project but for this test purpose all will be managed in one single project.
+    [TestFixture]
     public class CalculatorTests
     {
         private IWebDriver _driver;
-        private readonly IConfiguration _configuration;
+        private IConfiguration _configuration;
 
-        public CalculatorTests(IConfiguration configuration)
+        /// <summary>
+        /// Loads settings file
+        /// </summary>
+        public void InitConfiguration()
         {
-            _configuration = configuration;
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+            _configuration = config;
         }
 
         /// <summary>
@@ -48,10 +58,21 @@ namespace GoogleCalculatorTests.Tests
         [SetUp]
         public void SetUp()
         {
-
+            InitConfiguration();
             SetDriver();
             _driver.Navigate().GoToUrl(_configuration["URL"]);
             _driver.Manage().Window.Maximize();
+        }
+
+        /// <summary>
+        /// Test Case ID: TC_CALCULATOR_001
+        /// Test Scenario: Verify that calculator is displayed after search for "calculator" in search engine page.
+        /// </summary>
+        [Test]
+        public void TC_CALCULATOR_001()
+        {
+            SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
+            CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
         }
 
         /// <summary>
