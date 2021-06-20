@@ -69,7 +69,7 @@ namespace GoogleCalculatorTests.Pages
 
         public IWebElement MultiplicationButton
         {
-            get { return _driver.FindElement(By.XPath("//div[.='x']")); }
+            get { return _driver.FindElement(By.CssSelector("[jsname='YovRWb']")); }
         }
 
         public IWebElement OneButton
@@ -89,7 +89,7 @@ namespace GoogleCalculatorTests.Pages
 
         public IWebElement SubstractionButton
         {
-            get { return _driver.FindElement(By.XPath("//div[.='-']")); }
+            get { return _driver.FindElement(By.CssSelector("[jsname='pPHzQc']")); }
         }
 
         public IWebElement ZeroButton
@@ -104,7 +104,7 @@ namespace GoogleCalculatorTests.Pages
 
         public IWebElement EqualslButton
         {
-            get { return _driver.FindElement(By.XPath("//div[.='=']")); }
+            get { return _driver.FindElement(By.ClassName("UUhRt")); }
         }
 
         public IWebElement AddtionButton

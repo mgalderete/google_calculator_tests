@@ -73,6 +73,37 @@ namespace GoogleCalculatorTests.Tests
         {
             SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
             CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
+
+            Assert.IsTrue(calculatorPage.CalculatorContainer.Displayed);
+        }
+
+        /// <summary>
+        /// Test Case ID: TC_CALCULATOR_002
+        /// Test Scenario: Verify that calculator is displayed with all the required elements.
+        /// </summary>
+        [Test]
+        public void TC_CALCULATOR_002()
+        {
+            SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
+            CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
+
+            Assert.IsTrue(calculatorPage.ACButton.Displayed);
+            Assert.IsTrue(calculatorPage.SevenButton.Displayed);
+            Assert.IsTrue(calculatorPage.EightButton.Displayed);
+            Assert.IsTrue(calculatorPage.NineButton.Displayed);
+            Assert.IsTrue(calculatorPage.DivisionButton.Displayed);
+            Assert.IsTrue(calculatorPage.FourButton.Displayed);
+            Assert.IsTrue(calculatorPage.FiveButton.Displayed);
+            Assert.IsTrue(calculatorPage.SixButton.Displayed);
+            Assert.IsTrue(calculatorPage.MultiplicationButton.Displayed);
+            Assert.IsTrue(calculatorPage.OneButton.Displayed);
+            Assert.IsTrue(calculatorPage.TwoButton.Displayed);
+            Assert.IsTrue(calculatorPage.ThreeButton.Displayed);
+            Assert.IsTrue(calculatorPage.SubstractionButton.Displayed);
+            Assert.IsTrue(calculatorPage.ZeroButton.Displayed);
+            Assert.IsTrue(calculatorPage.DecimalButton.Displayed);
+            Assert.IsTrue(calculatorPage.EqualslButton.Displayed);
+            Assert.IsTrue(calculatorPage.AddtionButton.Displayed);
         }
 
         /// <summary>
