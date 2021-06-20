@@ -119,11 +119,29 @@ namespace GoogleCalculatorTests.Tests
         }
 
         /// <summary>
-        /// Test Case ID: TC_CALCULATOR_003
+        /// Test Case ID: TC_CALCULATOR_004
         /// Test Scenario: Verify that the result of the addition of two 1-digit numbers is correct.
         /// </summary>
         [Test]
         public void TC_CALCULATOR_004()
+        {
+            SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
+            CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
+
+            calculatorPage.TwoButton.Click();
+            calculatorPage.AddtionButton.Click();
+            calculatorPage.ThreeButton.Click();
+            calculatorPage.EqualslButton.Click();
+
+            Assert.AreEqual("5", calculatorPage.CalculatorScreenResult.Text);
+        }
+
+        /// <summary>
+        /// Test Case ID: TC_CALCULATOR_005
+        /// Test Scenario: Verify that the result of the addition of three 1-digit numbers is correct.
+        /// </summary>
+        [Test]
+        public void TC_CALCULATOR_005()
         {
             SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
             CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
@@ -137,7 +155,6 @@ namespace GoogleCalculatorTests.Tests
 
             Assert.AreEqual("5", calculatorPage.CalculatorScreenResult.Text);
         }
-
 
         /// <summary>
         /// Close driver instance after test execution.
