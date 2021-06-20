@@ -189,7 +189,7 @@ namespace GoogleCalculatorTests.Tests
         }
 
         /// <summary>
-        /// Test Case ID: TC_CALCULATOR_005
+        /// Test Case ID: TC_CALCULATOR_007
         /// Test Scenario: Verify that the result of the addition of three 2-digit numbers  is correct.
         /// </summary>
         [Test]
@@ -209,6 +209,56 @@ namespace GoogleCalculatorTests.Tests
             calculatorPage.EqualslButton.Click();
 
             Assert.AreEqual("221", calculatorPage.CalculatorScreenResult.Text);
+        }
+
+        /// <summary>
+        /// Test Case ID: TC_CALCULATOR_008
+        /// Test Scenario: Verify that the result of the subtraction of two 1-digit numbers is correct.
+        /// </summary>
+        [Test]
+        public void TC_CALCULATOR_008()
+        {
+            SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
+            CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
+
+            calculatorPage.TwoButton.Click();
+            calculatorPage.SubstractionButton.Click();
+            calculatorPage.ThreeButton.Click();
+            calculatorPage.EqualslButton.Click();
+
+            Assert.AreEqual("-1", calculatorPage.CalculatorScreenResult.Text);
+        }
+
+        /// <summary>
+        /// Test Case ID: TC_CALCULATOR_009
+        /// Test Scenario: Verify that the result of the subtraction of nine 1-digit numbers is correct.
+        /// </summary>
+        [Test]
+        public void TC_CALCULATOR_009()
+        {
+            SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
+            CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
+
+            calculatorPage.FiveButton.Click();
+            calculatorPage.SubstractionButton.Click();
+            calculatorPage.NineButton.Click();
+            calculatorPage.SubstractionButton.Click();
+            calculatorPage.SevenButton.Click();
+            calculatorPage.SubstractionButton.Click();
+            calculatorPage.EightButton.Click();
+            calculatorPage.SubstractionButton.Click();
+            calculatorPage.NineButton.Click();
+            calculatorPage.SubstractionButton.Click();
+            calculatorPage.ThreeButton.Click();
+            calculatorPage.SubstractionButton.Click();
+            calculatorPage.FourButton.Click();
+            calculatorPage.SubstractionButton.Click();
+            calculatorPage.OneButton.Click();
+            calculatorPage.SubstractionButton.Click();
+            calculatorPage.SixButton.Click();
+            calculatorPage.EqualslButton.Click();
+
+            Assert.AreEqual("-42", calculatorPage.CalculatorScreenResult.Text);
         }
 
         /// <summary>
