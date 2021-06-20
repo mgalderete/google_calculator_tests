@@ -118,6 +118,26 @@ namespace GoogleCalculatorTests.Tests
             Assert.AreEqual("1", calculatorPage.CalculatorScreenResult.Text);
         }
 
+        /// <summary>
+        /// Test Case ID: TC_CALCULATOR_003
+        /// Test Scenario: Verify that the result of the addition of two 1-digit numbers is correct.
+        /// </summary>
+        [Test]
+        public void TC_CALCULATOR_004()
+        {
+            SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
+            CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
+
+            calculatorPage.OneButton.Click();
+            calculatorPage.AddtionButton.Click();
+            calculatorPage.TwoButton.Click();
+            calculatorPage.AddtionButton.Click();
+            calculatorPage.TwoButton.Click();
+            calculatorPage.EqualslButton.Click();
+
+            Assert.AreEqual("5", calculatorPage.CalculatorScreenResult.Text);
+        }
+
 
         /// <summary>
         /// Close driver instance after test execution.
