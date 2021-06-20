@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium.Firefox;
 using GoogleCalculatorTests.Pages;
 using System.IO;
+using System.Collections.Generic;
 
 namespace GoogleCalculatorTests.Tests
 {
@@ -154,30 +155,15 @@ namespace GoogleCalculatorTests.Tests
         /// Test Scenario: Verify that summary of calculation is displayed above result in calculator virtual screen.
         /// </summary>
         [Test]
-        public void TC_CALCULATOR_019()
+        [TestCase("7-2.5+46×8÷2")]
+        public void TC_CALCULATOR_019(string operation)
         {
             SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
             CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
 
-            calculatorPage.SevenButton.Click();
-            calculatorPage.SubtractionButton.Click();
+            calculatorPage.GoogleCalculation(operation);
 
-            calculatorPage.TwoButton.Click();
-            calculatorPage.DecimalButton.Click();
-            calculatorPage.FiveButton.Click();
-            calculatorPage.AddtionButton.Click();
-
-            calculatorPage.FourButton.Click();
-            calculatorPage.SixButton.Click();
-            calculatorPage.MultiplicationButton.Click();
-
-            calculatorPage.EightButton.Click();
-            calculatorPage.DivisionButton.Click();
-
-            calculatorPage.TwoButton.Click();
-            calculatorPage.EqualslButton.Click();
-
-            Assert.AreEqual("7-2.5+((46x8/2))=", calculatorPage.CalculatorScreenSummary.Text);
+            Assert.AreEqual($"{operation}=", calculatorPage.CalculatorScreenSummary.Text.Trim());
         }
 
         /// <summary>
@@ -185,24 +171,13 @@ namespace GoogleCalculatorTests.Tests
         /// Test Scenario: Verify that result is displayed in exponential notation if is made up of more than 12 digits.
         /// </summary>
         [Test]
-        public void TC_CALCULATOR_020()
+        [TestCase("999999999999+9")]
+        public void TC_CALCULATOR_020(string operation)
         {
             SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
             CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
 
-            calculatorPage.NineButton.Click();
-            calculatorPage.NineButton.Click();
-            calculatorPage.NineButton.Click();
-            calculatorPage.NineButton.Click();
-            calculatorPage.NineButton.Click();
-            calculatorPage.NineButton.Click();
-            calculatorPage.NineButton.Click();
-            calculatorPage.NineButton.Click();
-            calculatorPage.NineButton.Click();
-            calculatorPage.AddtionButton.Click();
-
-            calculatorPage.NineButton.Click();
-            calculatorPage.EqualslButton.Click();
+            calculatorPage.GoogleCalculation(operation);
 
             Assert.IsTrue(calculatorPage.CalculatorScreenSummary.Text.Contains("e+"));
         }
@@ -212,51 +187,36 @@ namespace GoogleCalculatorTests.Tests
         /// Test Scenario: Verify that "AC" button erase correctly the summary of the calculation by performing two different operations.
         /// </summary>
         [Test]
-        public void TC_CALCULATOR_021()
+        [TestCase("2+3", "6÷2.5")]
+        public void TC_CALCULATOR_021(string operation1, string operation2)
         {
             SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
             CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
 
-            calculatorPage.TwoButton.Click();
-            calculatorPage.AddtionButton.Click();
-            calculatorPage.ThreeButton.Click();
-
-            Assert.AreEqual("5", calculatorPage.CalculatorScreenResult.Text);
-
+            calculatorPage.GoogleCalculation(operation1);
             calculatorPage.ACButton.Click();
 
-            Assert.AreEqual("0", calculatorPage.CalculatorScreenResult.Text);
+            decimal result = calculatorPage.Calculate(operation2);
+            decimal googleResult = calculatorPage.GoogleCalculation(operation2);
 
-            calculatorPage.SixButton.Click();
-            calculatorPage.DivisionButton.Click();
-            calculatorPage.TwoButton.Click();
-            calculatorPage.DecimalButton.Click();
-            calculatorPage.FiveButton.Click();
-            calculatorPage.EqualslButton.Click();
-
-            Assert.AreEqual("2.4", calculatorPage.CalculatorScreenResult.Text);
+            Assert.AreEqual(result, googleResult);
         }
 
         /// <summary>
-        /// Test Case ID: TC_CALCULATOR_020
+        /// Test Case ID: TC_CALCULATOR_022
         /// Test Scenario: Verify that after perform an operation and click "AC" button the summary of the calculation is displayed in correct format.
         /// </summary>
         [Test]
-        public void TC_CALCULATOR_022()
+        [TestCase("7+2")]
+        public void TC_CALCULATOR_022(string operation)
         {
             SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
             CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
 
-            calculatorPage.SevenButton.Click();
-            calculatorPage.AddtionButton.Click();
-
-            calculatorPage.TwoButton.Click();
-            calculatorPage.EqualslButton.Click();
-
-            Assert.AreEqual("9", calculatorPage.CalculatorScreenResult.Text);
-
+            decimal result = calculatorPage.GoogleCalculation(operation);
             calculatorPage.ACButton.Click();
-            Assert.AreEqual("Ans=9", calculatorPage.CalculatorScreenSummary.Text);
+
+            Assert.AreEqual($"Ans={result}", calculatorPage.CalculatorScreenSummary.Text);
         }
 
         /// <summary>
