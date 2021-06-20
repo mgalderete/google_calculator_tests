@@ -157,6 +157,38 @@ namespace GoogleCalculatorTests.Tests
         }
 
         /// <summary>
+        /// Test Case ID: TC_CALCULATOR_006
+        /// Test Scenario: Verify that the result of the addition of nine 1-digit numbers is correct.
+        /// </summary>
+        [Test]
+        public void TC_CALCULATOR_006()
+        {
+            SearchEnginePage searchEnginePage = new SearchEnginePage(_driver);
+            CalculatorPage calculatorPage = searchEnginePage.goToCalculatorPage();
+
+            calculatorPage.FiveButton.Click();
+            calculatorPage.AddtionButton.Click();
+            calculatorPage.NineButton.Click();
+            calculatorPage.AddtionButton.Click();
+            calculatorPage.SevenButton.Click();
+            calculatorPage.AddtionButton.Click();
+            calculatorPage.EightButton.Click();
+            calculatorPage.AddtionButton.Click();
+            calculatorPage.NineButton.Click();
+            calculatorPage.AddtionButton.Click();
+            calculatorPage.ThreeButton.Click();
+            calculatorPage.AddtionButton.Click();
+            calculatorPage.FourButton.Click();
+            calculatorPage.AddtionButton.Click();
+            calculatorPage.OneButton.Click();
+            calculatorPage.AddtionButton.Click();
+            calculatorPage.SixButton.Click();
+            calculatorPage.EqualslButton.Click();
+
+            Assert.AreEqual("52", calculatorPage.CalculatorScreenResult.Text);
+        }
+
+        /// <summary>
         /// Close driver instance after test execution.
         /// </summary>
         [TearDown]
