@@ -13,4 +13,4 @@ Dependencies:
 - .Net Core 5.0
 - Google Chrome 91.0.4472.114
 - Firefox 87.0 
-- Drivers for these borwsers are contained in the solution folder "Drivers"
+- Drivers for these browsers are contained in the solution folder "Drivers"
