@@ -35,10 +35,10 @@ namespace GoogleCalculatorTests.Tests
             switch (_configuration["Browser"])
             {
                 case "Firefox":
-                    _driver = new FirefoxDriver(); ;
+                    _driver = new FirefoxDriver("Drivers"); ;
                     break;
                 case "Chrome":
-                    _driver = new ChromeDriver("C:\\drivers");
+                    _driver = new ChromeDriver("Drivers");
                     break;
                 default:
                     throw new Exception("Invalid browser");
